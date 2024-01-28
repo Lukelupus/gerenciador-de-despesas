@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { User } from '../users/user.entity';
 
-@Entity(`${process.env.DATABASE_NAME}.expense`)
+@Entity(`expense`)
 export class Expense {
   @PrimaryGeneratedColumn()
   id: number;

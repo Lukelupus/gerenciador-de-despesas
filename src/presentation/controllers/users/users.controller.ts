@@ -1,8 +1,15 @@
-import { Controller, Post, Body, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { UsersService } from '../../../app/service/users/users.service';
 import { CreateUserDto } from '../../../domain/dto/users/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { User as UserModel } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
@@ -10,17 +17,17 @@ export class UsersController {
 
   @UseGuards(AuthGuard('local'))
   @Post('/login')
-  async login(@Body() userData: CreateUserDto): Promise<UserModel> {
-    return this.usersService.findByEmail(userData);
+  async login(@Request() req) {
+    return req.user;
   }
 
   @Post('/register')
-  async signupUser(@Body() userData: CreateUserDto): Promise<UserModel> {
-    return this.usersService.create(userData);
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 
   @Delete(':id')
-  remove(@Body() userData: CreateUserDto): Promise<UserModel> {
-    return this.usersService.remove(userData);
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(+id);
   }
 }

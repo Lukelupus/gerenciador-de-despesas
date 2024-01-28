@@ -1,41 +1,31 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../../domain/dto/users/create-user.dto';
 import { UpdateUserDto } from '../../../domain/dto/users/update-user.dto';
 import { User } from 'src/domain/entities';
-import { PrismaService } from '../prisma/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
-  create(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({
-      data,
-    });
-  }
-  async findByEmail(
-    userWhereUniqueInput: Prisma.UserWhereUniqueInput,
-  ): Promise<User | null> {
-    return this.prisma.user.findUnique({
-      where: userWhereUniqueInput,
-    });
+  constructor(
+    @Inject('EXPENSE_REPOSITORY')
+    private usersRepository: Repository<User>,
+  ) {}
+  create(createUserDto: CreateUserDto) {
+    const { email, password } = createUserDto;
+    console.log('Email: ' + email);
+    return 'This action adds a new user';
   }
 
-  async update(params: {
-    where: Prisma.UserWhereUniqueInput;
-    data: Prisma.UserUpdateInput;
-  }): Promise<User> {
-    const { where, data } = params;
-    return this.prisma.user.update({
-      data,
-      where,
-    });
+  async findByEmail(email: string): Promise<User[]> {
+    return this.usersRepository.find({ where: { email: email } });
   }
 
-  remove(where: Prisma.UserWhereUniqueInput): Promise<User> {
-    return this.prisma.user.delete({
-      where,
-    });
+  update(id: number, updateUserDto: UpdateUserDto) {
+    return this.usersRepository.find({ where: { id: id } });
+  }
+
+  remove(id: number) {
+    return this.usersRepository.delete(id);
   }
 }
