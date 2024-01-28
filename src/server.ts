@@ -19,8 +19,4 @@ async function bootstrap(): Promise<void> {
   }
 }
 
-//criar rotas pra fazer login = salvar os dados no banco
-
-//criar rotas pra despesas que vão ser criadas por esses ids.
-
 export { bootstrap };

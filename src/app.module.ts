@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PresentationModule } from './presentation/presentation.module';
-import { AuthModule } from './auth/auth.module';
 import { ExpensesModule } from './app/service/expenses/expenses.module';
 import { UsersModule } from './app/service/users/users.module';
 
@@ -9,7 +8,6 @@ import { UsersModule } from './app/service/users/users.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     PresentationModule,
-    AuthModule,
     ExpensesModule,
     UsersModule,
   ],

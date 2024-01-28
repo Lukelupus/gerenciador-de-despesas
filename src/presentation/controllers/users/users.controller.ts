@@ -5,20 +5,38 @@ import {
   Param,
   Delete,
   UseGuards,
-  Request,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
 import { UsersService } from '../../../app/service/users/users.service';
 import { CreateUserDto } from '../../../domain/dto/users/create-user.dto';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
 
-  @UseGuards(AuthGuard('local'))
   @Post('/login')
-  async login(@Request() req) {
-    return req.user;
+  @HttpCode(HttpStatus.OK)
+  async loginUser(
+    @Body('email') email: string,
+    @Body('password') password: string,
+  ): Promise<{ accessToken: string }> {
+    console.log('Entrou');
+    const user = await this.authService.validateUser(email, password);
+    console.log('validou o usuário');
+    const accessToken = await this.authService.generateToken(user);
+    console.log('obteve um acess token');
+    return { accessToken };
+  }
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  async findAll(@Param('email') email: string) {
+    return this.usersService.findByEmail(email);
   }
 
   @Post('/register')

@@ -17,6 +17,7 @@ export const databaseProviders = [
         database: configService.get('DATABASE_NAME'),
         entities: [Expense, User],
         synchronize: true,
+        logging: true,
       });
 
       return dataSource.initialize();

@@ -4,28 +4,38 @@ import { CreateUserDto } from '../../../domain/dto/users/create-user.dto';
 import { UpdateUserDto } from '../../../domain/dto/users/update-user.dto';
 import { User } from 'src/domain/entities';
 import { Repository } from 'typeorm';
+import { HashService } from './hash.service';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject('EXPENSE_REPOSITORY')
+    @Inject('USER_REPOSITORY')
     private usersRepository: Repository<User>,
   ) {}
-  create(createUserDto: CreateUserDto) {
+
+  async create(createUserDto: CreateUserDto) {
     const { email, password } = createUserDto;
-    console.log('Email: ' + email);
-    return 'This action adds a new user';
+    const newUser = new User();
+    newUser.email = email;
+    newUser.password = await HashService.hashPassword(password);
+    console.log(newUser);
+    try {
+      return this.usersRepository.save(newUser);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async findByEmail(email: string): Promise<User[]> {
-    return this.usersRepository.find({ where: { email: email } });
+    console.log(email);
+    return await this.usersRepository.find({ where: { email: email } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     return this.usersRepository.find({ where: { id: id } });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return this.usersRepository.delete(id);
   }
 }

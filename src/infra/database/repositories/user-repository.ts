@@ -1,7 +1,10 @@
 import { User } from 'src/domain/entities';
+import { DataSource } from 'typeorm';
 
-abstract class UsersRepository {
-  abstract findByEmail(email: string): Promise<User | void>;
-}
-
-export { UsersRepository };
+export const usersRepository = [
+  {
+    provide: 'USER_REPOSITORY',
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(User),
+    inject: ['DATA_SOURCE'],
+  },
+];

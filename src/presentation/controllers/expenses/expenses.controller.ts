@@ -11,7 +11,7 @@ import { ExpensesService } from '../../../app/service/expenses/expenses.service'
 import { CreateExpenseDto } from '../../../domain/dto/expenses/create-expense.dto';
 import { UpdateExpenseDto } from '../../../domain/dto/expenses/update-expense.dto';
 import { User } from 'src/domain/entities';
-import { GetUser } from 'src/shared/decorators/get-user';
+import { GetUser } from 'src/shared/decorators/get-user.decorator';
 
 @Controller('expenses')
 export class ExpensesController {
@@ -22,7 +22,7 @@ export class ExpensesController {
     return this.expensesService.create(user, createExpenseDto);
   }
 
-  @Get(':id')
+  @Get()
   findOne(@Param('user_id') id: User) {
     return this.expensesService.findExpenseByUser(id);
   }
