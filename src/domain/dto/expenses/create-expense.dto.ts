@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsPositive, IsString, MaxLength } from 'class-validator';
 
 export class CreateExpenseDto {
   @IsString()
@@ -9,5 +9,6 @@ export class CreateExpenseDto {
   date: string;
 
   @IsNotEmpty()
+  @IsPositive()
   value: number;
 }
