@@ -4,6 +4,7 @@ import { UpdateExpenseDto } from '../../../domain/dto/expenses/update-expense.dt
 import { Expense, User } from '../../../domain/entities';
 import { Repository } from 'typeorm';
 import { convertDateStringToDate } from '../../../shared/utils/date-formater';
+import { EmailService } from 'src/infra/mailer/mailer.service';
 
 //Regras de negócio
 @Injectable()
@@ -11,6 +12,7 @@ export class ExpensesService {
   constructor(
     @Inject('EXPENSE_REPOSITORY')
     private expenseRepository: Repository<Expense>,
+    private readonly emailService: EmailService,
   ) {}
   async create(user: User, createExpenseDto: CreateExpenseDto) {
     const { value, date, desciption } = createExpenseDto;
@@ -26,7 +28,18 @@ export class ExpensesService {
       return 'Must be logged to create a expense!';
     }
 
-    return this.expenseRepository.save(newExpense);
+    const savedExpense = this.expenseRepository.save(newExpense);
+    try {
+      await this.emailService.sendEmail(
+        user.email,
+        'Despesa Cadastrada!',
+        desciption,
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
+    return savedExpense;
   }
 
   async getExpenseById(id: number): Promise<Expense[]> {
