@@ -12,7 +12,7 @@ config();
 @Module({
   imports: [
     UsersModule,
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_TOKEN,

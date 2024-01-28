@@ -12,7 +12,6 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, pass: string): Promise<User> {
-    console.log('Entro no validar');
     const user = await this.usersService.findByEmail(email);
     const matchPassword = await HashService.comparePasswords(
       pass,
@@ -25,12 +24,14 @@ export class AuthService {
 
     return user[0];
   }
+  async validateUserById(id: number): Promise<User> {
+    const user = await this.usersService.findById(id);
 
+    return user[0];
+  }
   async generateToken(user: User): Promise<string> {
-    console.log('Entrou no generate Token');
-    const payload = { username: user.email, sub: user.id };
-    console.log(payload);
-    console.log(await this.jwtService.signAsync(payload));
+    const payload = { email: user.email, sub: user.id };
+
     return await this.jwtService.signAsync(payload);
   }
 }

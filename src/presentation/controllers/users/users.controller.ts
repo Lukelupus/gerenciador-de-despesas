@@ -26,11 +26,8 @@ export class UsersController {
     @Body('email') email: string,
     @Body('password') password: string,
   ): Promise<{ accessToken: string }> {
-    console.log('Entrou');
     const user = await this.authService.validateUser(email, password);
-    console.log('validou o usuário');
     const accessToken = await this.authService.generateToken(user);
-    console.log('obteve um acess token');
     return { accessToken };
   }
   @UseGuards(JwtAuthGuard)

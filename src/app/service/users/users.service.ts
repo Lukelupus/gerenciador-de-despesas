@@ -31,6 +31,10 @@ export class UsersService {
     return await this.usersRepository.find({ where: { email: email } });
   }
 
+  async findById(id: number): Promise<User[]> {
+    return await this.usersRepository.find({ where: { id: id } });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     return this.usersRepository.find({ where: { id: id } });
   }

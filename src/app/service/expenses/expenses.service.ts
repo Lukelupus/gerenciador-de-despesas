@@ -3,6 +3,7 @@ import { CreateExpenseDto } from '../../../domain/dto/expenses/create-expense.dt
 import { UpdateExpenseDto } from '../../../domain/dto/expenses/update-expense.dto';
 import { Expense, User } from 'src/domain/entities';
 import { Repository } from 'typeorm';
+import { convertDateStringToDate } from 'src/shared/utils/date-formater';
 
 //Regras de negócio
 @Injectable()
@@ -13,13 +14,16 @@ export class ExpensesService {
   ) {}
   async create(user: User, createExpenseDto: CreateExpenseDto) {
     const { value, date, desciption } = createExpenseDto;
-
     const newExpense = new Expense();
-
+    console.log(user);
     newExpense.value = value;
     newExpense.desciption = desciption;
-    newExpense.date = date;
+    newExpense.date = convertDateStringToDate(date);
     newExpense.user_id = user;
+
+    if (!user) {
+      return 'Must be logged to create a expense!';
+    }
 
     return this.expenseRepository.save(newExpense);
   }

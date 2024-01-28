@@ -1,10 +1,13 @@
-import { Strategy } from 'passport-local';
+import { Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ExtractJwt } from 'passport-jwt';
+import { AuthService } from '../auth.service';
+import { User } from 'src/domain/entities';
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -12,7 +15,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return { userId: payload.sub, email: payload.email };
+  async validate(payload: User) {
+    const user = await this.authService.validateUserById(
+      Object.entries(payload)[1][1],
+    );
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    return user;
   }
 }
