@@ -15,12 +15,13 @@ export class ExpensesService {
   async create(user: User, createExpenseDto: CreateExpenseDto) {
     const { value, date, desciption } = createExpenseDto;
     const newExpense = new Expense();
-    console.log(user);
     newExpense.value = value;
     newExpense.desciption = desciption;
     newExpense.date = convertDateStringToDate(date);
     newExpense.user_id = user;
-
+    if (!convertDateStringToDate(date)) {
+      return 'Date must be present!';
+    }
     if (!user) {
       return 'Must be logged to create a expense!';
     }
@@ -35,15 +36,22 @@ export class ExpensesService {
     }
     return expense;
   }
-  // InterceptorError @Global
-  async findExpenseByUser(user: User): Promise<Expense[]> {
-    return this.expenseRepository.find({ where: { user_id: user } });
+  async findOne(id: number): Promise<Expense[]> {
+    return this.expenseRepository.find({ where: { id: id } });
+  }
+  async findAll(): Promise<Expense[]> {
+    return this.expenseRepository.find();
   }
 
   async update(id: number, updateExpenseDto: UpdateExpenseDto) {
     const expense = await this.getExpenseById(id);
-    expense[0].desciption = updateExpenseDto.desciption;
-    expense[0].value = updateExpenseDto.value;
+    const { desciption, value, date } = updateExpenseDto;
+    if (!convertDateStringToDate(date)) {
+      return 'Date must be present!';
+    }
+    expense[0].desciption = desciption;
+    expense[0].value = value;
+    expense[0].date = convertDateStringToDate(date);
     return this.expenseRepository.save(expense);
   }
 

@@ -18,7 +18,7 @@ export class UsersService {
     const newUser = new User();
     newUser.email = email;
     newUser.password = await HashService.hashPassword(password);
-    console.log(newUser);
+
     try {
       return this.usersRepository.save(newUser);
     } catch (error) {
@@ -27,7 +27,6 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User[]> {
-    console.log(email);
     return await this.usersRepository.find({ where: { email: email } });
   }
 

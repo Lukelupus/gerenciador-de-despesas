@@ -21,13 +21,18 @@ export class ExpensesController {
 
   @UseGuards(JwtAuthGuard)
   @Post('/create')
-  create(@GetUser user: User, @Body() createExpenseDto: CreateExpenseDto) {
+  create(@GetUser() user: User, @Body() createExpenseDto: CreateExpenseDto) {
     return this.expensesService.create(user, createExpenseDto);
   }
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  findOne(@Param('user_id') id: User) {
-    return this.expensesService.findExpenseByUser(id);
+
+  @Get('')
+  findAll() {
+    return this.expensesService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.expensesService.findOne(id);
   }
   @UseGuards(JwtAuthGuard)
   @Patch(':id')

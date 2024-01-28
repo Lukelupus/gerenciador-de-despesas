@@ -17,7 +17,7 @@ export class AuthService {
       pass,
       user[0].password,
     );
-    console.log(matchPassword);
+
     if (!matchPassword) {
       throw new UnauthorizedException();
     }
