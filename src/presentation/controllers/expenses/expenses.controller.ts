@@ -10,33 +10,30 @@ import {
 import { ExpensesService } from '../../../app/service/expenses/expenses.service';
 import { CreateExpenseDto } from '../../../domain/dto/expenses/create-expense.dto';
 import { UpdateExpenseDto } from '../../../domain/dto/expenses/update-expense.dto';
+import { User } from 'src/domain/entities';
+import { GetUser } from 'src/shared/decorators/get-user';
 
 @Controller('expenses')
 export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
   @Post()
-  create(@Body() createExpenseDto: CreateExpenseDto) {
-    return this.expensesService.create(createExpenseDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.expensesService.findAll();
+  create(@GetUser user: User, @Body() createExpenseDto: CreateExpenseDto) {
+    return this.expensesService.create(user, createExpenseDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.expensesService.findOne(+id);
+  findOne(@Param('user_id') id: User) {
+    return this.expensesService.findExpenseByUser(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExpenseDto: UpdateExpenseDto) {
+  update(@Param('id') id: number, @Body() updateExpenseDto: UpdateExpenseDto) {
     return this.expensesService.update(+id, updateExpenseDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.expensesService.remove(+id);
   }
 }
