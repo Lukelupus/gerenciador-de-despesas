@@ -2,7 +2,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../../domain/dto/users/create-user.dto';
 import { UpdateUserDto } from '../../../domain/dto/users/update-user.dto';
-import { User } from 'src/domain/entities';
+import { User } from '../../../domain/entities';
 import { Repository } from 'typeorm';
 import { HashService } from './hash.service';
 

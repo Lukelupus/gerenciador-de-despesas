@@ -1,4 +1,4 @@
-import { User } from 'src/domain/entities';
+import { User } from '../../../domain/entities';
 import { DataSource } from 'typeorm';
 
 export const usersRepository = [

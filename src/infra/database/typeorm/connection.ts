@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Expense, User } from 'src/domain/entities/index';
+import { Expense, User } from '../../../domain/entities/index';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 export const databaseProviders = [

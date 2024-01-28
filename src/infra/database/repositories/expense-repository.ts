@@ -1,4 +1,4 @@
-import { Expense } from 'src/domain/entities';
+import { Expense } from '../../../domain/entities';
 import { DataSource } from 'typeorm';
 
 export const expenseProviders = [

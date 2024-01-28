@@ -1,9 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateExpenseDto } from '../../../domain/dto/expenses/create-expense.dto';
 import { UpdateExpenseDto } from '../../../domain/dto/expenses/update-expense.dto';
-import { Expense, User } from 'src/domain/entities';
+import { Expense, User } from '../../../domain/entities';
 import { Repository } from 'typeorm';
-import { convertDateStringToDate } from 'src/shared/utils/date-formater';
+import { convertDateStringToDate } from '../../../shared/utils/date-formater';
 
 //Regras de negócio
 @Injectable()
