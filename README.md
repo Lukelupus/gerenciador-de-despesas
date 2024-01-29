@@ -10,8 +10,6 @@ Pré-requisitos
 
     Clone o Repositório:
 
-    bash
-
 cd gerenciador-de-despesas
 
 Instale as Dependências:
@@ -90,6 +88,8 @@ Registro e Autenticação do Usuário
           "value": 50.00,
           "date": "2024-01-28"
         }
+
+        A lista completa de endpoints encontr-se aqui: SwaggerEndpoints[http://localhost:3000/api]
 
 ## Observação:
 
