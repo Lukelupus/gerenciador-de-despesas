@@ -6,6 +6,10 @@ Pré-requisitos
     Certifique-se de ter o Node.js e o npm instalados em sua máquina.
     Tenha um servidor MySQL disponível.
 
+## Versão do Node
+
+v20.10.0
+
 ## Passos de Instalação
 
     Clone o Repositório:
