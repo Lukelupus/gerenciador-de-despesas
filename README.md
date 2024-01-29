@@ -93,7 +93,9 @@ Registro e Autenticação do Usuário
           "date": "2024-01-28"
         }
 
-        A lista completa de endpoints encontr-se aqui: SwaggerEndpoints[http://localhost:3000/api]
+## A lista completa de endpoints encontr-se aqui:
+
+Endpoints[http://localhost:3000/api]
 
 ## Observação:
 
