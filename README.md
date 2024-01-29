@@ -1,3 +1,101 @@
+## Expense Manager - Guia de Instalação e Uso
+
+Bem-vindo ao Expense Manager, um aplicativo simples para realizar operações CRUD em despesas. Siga as instruções abaixo para configurar e testar o projeto.
+Pré-requisitos
+
+    Certifique-se de ter o Node.js e o npm instalados em sua máquina.
+    Tenha um servidor MySQL disponível.
+
+## Passos de Instalação
+
+    Clone o Repositório:
+
+    bash
+
+git clone https://github.com/seu-usuario/expense-manager.git
+cd expense-manager
+
+Instale as Dependências:
+
+## Installation
+
+```bash
+$ npm install
+```
+
+Configure o Banco de Dados:
+
+    Execute um servidor MySQL.
+    Crie um banco de dados chamado expense_manager.
+
+Execute as Migrações do Prisma:
+
+```bash
+
+    npx prisma generate --schema=src/infra/prisma/schema.prisma
+    npx prisma migrate dev --name init
+```
+
+## Começando o Aplicativo
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+Registro e Autenticação do Usuário
+
+    Cadastre um Usuário:
+        Utilize o endpoint POST /users/register com o seguinte JSON no corpo da requisição:
+
+        json
+
+        {
+          "email": "seuemailaqui",
+          "password": "suasenhaaqui"
+        }
+
+    Faça Login:
+        Utilize o endpoint POST /users/login com o mesmo JSON utilizado para o cadastro.
+
+    Obtenha o Token:
+        Após o login bem-sucedido, copie o token Bearer gerado, pois será necessário para as operações CRUD.
+
+## Operações CRUD de Despesas
+
+    Listar Todas as Despesas:
+        Endpoint: GET /expenses/
+
+    Buscar Despesa Específica:
+        Endpoint: GET /expenses/:id (substitua :id pelo ID da despesa desejada)
+           Editar Despesa Específica:
+        Endpoint: PATCH /expenses/:id (substitua :id pelo ID da despesa desejada)
+           Deletar Despesa Específica:
+        Endpoint: DELETE /expenses/:id (substitua :id pelo ID da despesa desejada)
+
+    Criar uma Despesa:
+        Endpoint: POST /expenses/create com o seguinte JSON no corpo da requisição:
+
+        json
+
+        {
+          "desciption": "Descrição da Despesa",
+          "value": 50.00,
+          "date": "2024-01-28"
+        }
+
+## Observação:
+
+    Certifique-se de incluir o token Bearer nas requisições para operações CRUD. O token expira em uma hora.
+
+Agora você está pronto para explorar e testar o Expense Manager! Se tiver algum problema, verifique as configurações do banco de dados e certifique-se de seguir todos os passos corretamente.
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
@@ -25,25 +123,6 @@
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
 
 ## Test
 
