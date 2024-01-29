@@ -24,16 +24,9 @@ Instale as Dependências:
 $ npm install
 ```
 
-Configure o Banco de Dados:
-
-    Execute um servidor MySQL.
-    Crie um banco de dados chamado expense_manager.
-
 Execute as Migrações do Prisma:
 
 ```bash
-
-    npx prisma generate --schema=src/infra/prisma/schema.prisma
     npx prisma migrate dev --name init
 ```
 
