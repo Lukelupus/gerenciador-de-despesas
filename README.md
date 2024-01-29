@@ -12,7 +12,7 @@ Pré-requisitos
 
     bash
 
-git clone https://github.com/Lukelupus/gerenciador-de-despesas.git
+
 cd expense-manager
 
 Instale as Dependências:
