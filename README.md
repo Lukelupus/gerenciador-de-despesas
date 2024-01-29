@@ -88,7 +88,7 @@ Registro e Autenticação do Usuário
 
 ## A lista completa de endpoints encontr-se aqui:
 
-Endpoints[http://localhost:3000/api]
+Endpoints(http://localhost:3000/api)
 
 ## Observação:
 
