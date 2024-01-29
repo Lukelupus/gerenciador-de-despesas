@@ -37,6 +37,8 @@ Execute as Migrações do Prisma:
 
 ## Começando o Aplicativo
 
+Renomeie o arquivo .env.exemple para .env e popule-o com as suas variáveis corretas de ambiente;
+
 ```bash
 # development
 $ npm run start
