@@ -12,8 +12,7 @@ Pré-requisitos
 
     bash
 
-
-cd expense-manager
+cd gerenciador-de-despesas
 
 Instale as Dependências:
 
